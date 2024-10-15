@@ -7,14 +7,14 @@ from nltk.stem import WordNetLemmatizer
 from sklearn.model_selection import train_test_split
 
 # Install necessary nltk data and resources
-nltk.download('punkt')
+nltk.download('punkt_tab')
 nltk.download('stopwords')
 nltk.download('wordnet')
 
 # Load the datasets
 def load_data():
-    true_news = pd.read_csv('True.csv')
-    fake_news = pd.read_csv('Fake.csv')
+    true_news = pd.read_csv('data/True.csv')
+    fake_news = pd.read_csv('data/Fake.csv')
 
     # Add labels: 1 for true news, 0 for fake news
     true_news['label'] = 1
