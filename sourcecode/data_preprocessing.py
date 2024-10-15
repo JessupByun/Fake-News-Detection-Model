@@ -71,7 +71,12 @@ def prepare_data():
     data = load_data()
     data = clean_data(data)
     
-    # Split the data
-    X_train, X_test, y_train, y_test = split_data(data)
-    return X_train, X_test, y_train, y_test
+    # Commented out the splitting for cross-validation purposes
+    # X_train, X_test, y_train, y_test = split_data(data)
+    # return X_train, X_test, y_train, y_test
+    
+    # Return full dataset for cross-validation
+    X = data['cleaned_text']
+    y = data['label']
+    return X, y
 

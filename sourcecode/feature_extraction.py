@@ -12,3 +12,4 @@ def extract_features(X_train, X_test):
 
     # Return the transformed training and testing data
     return X_train_tfidf, X_test_tfidf
+
