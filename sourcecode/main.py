@@ -10,10 +10,10 @@ X, y = prepare_data()  # This will load and preprocess your data
 vectorizer = TfidfVectorizer(max_features=5000)
 X_tfidf = vectorizer.fit_transform(X)  # Transform entire dataset for cross-validation
 
-# Step 3: Initialize Logistic Regression model
+# Initialize Logistic Regression model
 model = LogisticRegression(max_iter=500)
 
-# Step 4: Perform cross-validation (5-fold)
+# Perform cross-validation (5-fold)
 cv_scores = cross_val_score(model, X_tfidf, y, cv=5, scoring='accuracy')
 
 # Print cross-validation results

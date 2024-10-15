@@ -1,6 +1,7 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-def extract_features(X_train, X_test):
+# Function will be used for train-test split, otherwise, vectorizer will be called in main execution file for cross-validation test
+def extract_features(X_train, X_test): 
     # Initialize the TF-IDF vectorizer
     vectorizer = TfidfVectorizer(max_features=5000)
     

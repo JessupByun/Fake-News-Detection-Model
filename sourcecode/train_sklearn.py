@@ -1,7 +1,7 @@
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report
 
-# Train a Logistic Regression model
+# Train Logistic Regression model
 def train_model(X_train, X_test, y_train, y_test):
     # Initialize the Logistic Regression model
     model = LogisticRegression(max_iter=1000)  # Increase max_iter if necessary
@@ -21,3 +21,5 @@ def train_model(X_train, X_test, y_train, y_test):
     print(classification_report(y_test, y_pred))
     
     return model
+
+# Still in development: Training of other models (Random Forest, SVM, etc)
