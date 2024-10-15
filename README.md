@@ -1,6 +1,6 @@
 # **Fake News Detection Model** by Jessup Byun
 
-This project aims to classify news articles as either **real** or **fake** using machine learning techniques, specifically leveraging **Logistic Regression, Random Forest, etc**. The dataset consists of over 40000 labeled news articles and has been preprocessed using various **Natural Language Processing (NLP)** techniques to achieve high accuracy. The overall goal is to create a model that can accurately identify fake news based on the content of the articles.
+A high-accuracy (97.4%) binary classification model capable of categorizing news articles as either **real** or **fake** using machine learning techniques, specifically leveraging **Logistic Regression**. The dataset consists of over 40000 labeled news articles and has been preprocessed using various **Natural Language Processing (NLP)** techniques to achieve high accuracy. The overall goal is to create a model that can accurately identify fake news based on the text content of the articles.
 
 ## **Dataset**
 
@@ -68,12 +68,13 @@ Using a traditional **train-test split** (80% training data and 20% testing data
 ### **Cross-Validation Accuracy**
 To mitigate the risk of overfitting, I used **5-fold cross-validation**. Cross-validation divides the dataset into 5 subsets (folds), trains the model on 4 folds, and tests it on the remaining fold. This process is repeated 5 times, and the results are averaged. The cross-validation accuracy was **97.4%**, showing a consistent performance across different folds, indicating that the model generalizes well to unseen data.
 
-- **Train-Test Accuracy**: 98.6%
-- **Cross-Validation Accuracy (5 Folds)**: 97.4%
+**Train-Test Accuracy**: 98.6%
+**Cross-Validation Accuracy (5 Folds)**: 97.4%
 
-## **Next Steps**
+## **Next Steps (still in development)**
 To further improve the model, I plan to:
 - Experiment with other machine learning models like **Random Forest** and **SVM** to see if they outperform logistic regression.
+- Perform more evaluations using live demos and other testing datasets
 - Explore more advanced text classification techniques, such as using **Neural Networks** or **transformer models** like BERT.
 
 ## **How to Run the Project**
