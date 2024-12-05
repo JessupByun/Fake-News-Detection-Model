@@ -79,4 +79,3 @@ def prepare_data():
     X = data['cleaned_text']
     y = data['label']
     return X, y
-

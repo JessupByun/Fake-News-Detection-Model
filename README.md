@@ -1,6 +1,12 @@
 # **Fake News Detection Model** by Jessup Byun
 
-A high-accuracy (97.4%) binary classification model capable of categorizing news articles as either **real** or **fake** using machine learning techniques, specifically leveraging **Logistic Regression**. The dataset consists of over 40000 labeled news articles and has been preprocessed using various **Natural Language Processing (NLP)** techniques to achieve high accuracy. The overall goal is to create a model that can accurately identify fake news based on the text content of the articles.
+A high-accuracy binary classification model capable of categorizing news articles as either **real** or **fake** using machine learning techniques. The project has been implemented twice:
+1. Using **Scikit-learn** with **Logistic Regression** for simplicity and interpretability.
+2. Using **PyTorch** to build a custom **neural network** for greater flexibility and experimentation with deep learning.
+
+Both versions preprocess and classify a dataset of over 40,000 labeled news articles, achieving high accuracy scores.
+
+---
 
 ## **Dataset**
 
@@ -8,85 +14,89 @@ The dataset used in this project is available on [Kaggle](https://www.kaggle.com
 - **True.csv**: Contains news articles labeled as "true" (real news).
 - **Fake.csv**: Contains news articles labeled as "fake" (fake news).
 
-Both files have been concatenated into a single DataFrame, where labels were added to indicate **1 for real news** and **0 for fake news**. The dataset was then processed to remove missing values and duplicates before being used for feature extraction and model training.
+### **Data Preparation**
+- Labels: **1 for real news** and **0 for fake news**.
+- Combined into a single DataFrame, cleaned to remove duplicates and missing values.
+
+---
 
 ## **Project Structure**
 
-This project is organized into several Python scripts, each responsible for a different aspect of the machine learning pipeline:
+This project is organized into Python scripts for modular implementation. Both **Scikit-learn** and **PyTorch** pipelines use the same dataset and preprocessing steps.
 
-### **1. `data_preprocessing.py`**
-This script is responsible for:
-- **Loading the dataset**: Combines the real and fake news articles into a single DataFrame.
-- **Cleaning the data**: Removes punctuation, stopwords, and performs **lemmatization** to ensure that only meaningful words are kept. This step is crucial to improving the quality of the data for the model.
-- **Text Preprocessing**: Prepares the text for feature extraction by converting it into a clean and tokenized format.
+### **1. Scikit-learn Version**
+#### Structure:
+- **`data_preprocessing.py`**: Cleans the dataset using NLTK (tokenization, stopword removal, lemmatization) and prepares it for vectorization.
+- **`feature_extraction.py`**: Converts text into TF-IDF vectors.
+- **`train_sklearn.py`**: Trains a **Logistic Regression** model and evaluates its performance using accuracy, precision, recall, and F1-score.
+- **`main.py`**: Orchestrates the pipeline, performs **5-fold cross-validation**, and computes average accuracy.
 
-Key Libraries: 
-- **Pandas** for data manipulation.
-- **NLTK (Natural Language Toolkit)**: Used for tokenization, stopword removal, and lemmatization. This helps reduce noise in the dataset and improves model performance.
+#### Results:
+- **Train-Test Accuracy**: 98.6%
+- **Cross-Validation Accuracy (5 Folds)**: 97.4%
 
-### **2. `feature_extraction.py`**
-This script handles:
-- **Feature Extraction**: Uses **TF-IDF (Term Frequency-Inverse Document Frequency)** to convert the text data into numerical features that can be fed into machine learning models. 
-- **Why TF-IDF?**: TF-IDF is effective for text classification tasks as it captures the importance of words across the dataset. This feature extraction method reduces the dimensionality of the text data while still preserving important information about the words.
+#### Libraries:
+- **Pandas**, **Scikit-learn**, **NLTK**
 
-Key Library:
-- **`TfidfVectorizer`** from `sklearn.feature_extraction.text`: This converts the cleaned text into TF-IDF vectors with a maximum feature limit of 5000, balancing between performance and feature richness.
+---
 
-### **3. `train_sklearn.py`**
-This script focuses on:
-- **Model Training**: Implements **Logistic Regression** to classify news articles as real or fake.
-- **Model Evaluation**: Evaluates the model using **accuracy**, **precision**, **recall**, and **F1-score** metrics.
+### **2. PyTorch Version**
+#### Structure:
+- **`data_preprocessing.py`**: Uses simpler preprocessing (punctuation removal, lowercasing) to test performance without heavy NLP processing.
+- **`feature_extraction.py`**: Converts text into TF-IDF vectors, consistent with the Scikit-learn pipeline.
+- **`train_pytorch.py`**: Defines and trains a neural network using PyTorch with the following architecture:
+  - **Input Layer**: Based on TF-IDF features.
+  - **Two Hidden Layers**: Each with **ReLU activations**.
+  - **Output Layer**: Binary classification using the **Sigmoid activation**.
+  - **Optimizer**: Adam (adaptive learning rate).
+  - **Loss Function**: CrossEntropyLoss.
+- **`main_advanced.py`**: Manages the PyTorch workflow, including training and evaluation.
 
-Key Libraries:
-- **`LogisticRegression`** from `sklearn.linear_model`: This is the primary machine learning algorithm used in the project.
-- **`accuracy_score` and `classification_report`** from `sklearn.metrics`: These functions evaluate how well the model performs.
+#### Results:
+- **Training Accuracy**: 90.6%
+- **Test Accuracy**: 91.0%
 
-### **4. `main.py`**
-This is the orchestrating script that ties everything together:
-- **Loads the data** and preprocesses it using the functions from `data_preprocessing.py`.
-- **Extracts features** using the `extract_features` function from `feature_extraction.py`.
-- **Trains the model** and evaluates its performance using `train_model` from `train_sklearn.py`.
-- Implements **cross-validation** for a more robust model evaluation.
+#### Libraries:
+- **PyTorch**, **Pandas**, **Scikit-learn**
 
-## **Libraries Used**
-The project heavily relies on the following libraries:
-- **Pandas**: For data manipulation and handling the CSV files.
-- **Scikit-learn**: For implementing machine learning models, cross-validation, and evaluation metrics.
-- **NLTK**: For natural language processing tasks like tokenization, stopword removal, and lemmatization.
-- **TfidfVectorizer**: For converting the cleaned text into numerical features.
+---
 
 ## **NLP Design Choices**
-I chose to use **NLTK** for text preprocessing because it offers comprehensive tools for tokenization, stopword removal, and lemmatization. These steps are critical in removing noise from the dataset, which helps the model focus on the important words in each article.
+1. **Scikit-learn Version**: Included extensive NLP preprocessing using **NLTK** to clean and tokenize text, as well as remove noise (e.g., stopwords, punctuation).
+2. **PyTorch Version**: Tested simplified preprocessing to evaluate the model's robustness and reduce preprocessing complexity.
 
-For feature extraction, I opted for **TF-IDF**, which is a common choice for text classification tasks. It balances the frequency of words and how informative they are across the dataset. I limited the number of features to **5000** to avoid overfitting and reduce dimensionality, which improved model training speed and performance.
+Both pipelines relied on **TF-IDF** for feature extraction:
+- Captures word importance across the dataset.
+- Limits features to **5000** to reduce dimensionality and computational costs.
 
-## **Accuracy and Model Performance**
+---
 
-### **Train-Test Split Accuracy**
-Using a traditional **train-test split** (80% training data and 20% testing data), the model achieved an accuracy of **98.6%**. This suggests that the model performed very well on the test set, but it may still be prone to overfitting, as this single split doesn’t evaluate performance on different subsets of data.
+## **Results and Analysis**
+### Scikit-learn:
+- **Train-Test Accuracy**: 98.6%
+- **Cross-Validation Accuracy**: 97.4%
+- **Strengths**: Simplicity, fast training, and interpretable results.
+- **Limitations**: May struggle with generalization when scaling to more complex datasets.
 
-### **Cross-Validation Accuracy**
-To mitigate the risk of overfitting, I used **5-fold cross-validation**. Cross-validation divides the dataset into 5 subsets (folds), trains the model on 4 folds, and tests it on the remaining fold. This process is repeated 5 times, and the results are averaged. The cross-validation accuracy was **97.4%**, showing a consistent performance across different folds, indicating that the model generalizes well to unseen data.
+### PyTorch:
+- **Training Accuracy**: 90.6%
+- **Test Accuracy**: 91.0%
+- **Strengths**: Customizable architecture, potential for scalability to larger datasets or more complex tasks.
+- **Limitations**: More resource-intensive and requires careful tuning.
 
-**Train-Test Accuracy**: 98.6%
-**Cross-Validation Accuracy (5 Folds)**: 97.4%
+---
 
-## **Next Steps (still in development)**
-To further improve the model, I plan to:
-- Experiment with other machine learning models like **Random Forest** and **SVM** to see if they outperform logistic regression.
-- Perform more evaluations using live demos and other testing datasets
-- Explore more advanced text classification techniques, such as using **Neural Networks** or **transformer models** like BERT.
+## **Next Steps**
+- Test with more complex models (e.g., **LSTMs** or **transformers**) using PyTorch for sequence-based analysis.
+- Deploy a live demo using **Flask** or **FastAPI** to classify user-input articles in real time.
+- Compare additional feature extraction techniques, such as **word embeddings** (e.g., Word2Vec, GloVe).
+- Expand the dataset or test the model on entirely unseen data to evaluate robustness.
+
+---
 
 ## **How to Run the Project**
+
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/your_username/Fake-News-Detection-Model.git
+   git clone https://github.com/JessupByun/Fake-News-Detection-Model.git
    cd Fake-News-Detection-Model
-
-2. **Install the necessary libraries**
-    ```bash
-    pip install -r requirements.txt
-
-3. **Run the main script to perform either cross-validation or train-split test
-    ```bash
-    python src/main.py
